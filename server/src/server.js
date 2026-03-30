@@ -5,37 +5,64 @@ const config = require('./config/config');
 const { pool } = require('./db/pool');
 const logger = require('./utils/logger');
 
-// ✅ Graceful shutdown
+//
+// ✅ 1. START SERVER
+//
+const PORT = process.env.PORT || config.port || 4000;
+
+const server = app.listen(PORT, () => {
+  logger.info(`🚀 Server running on port ${PORT} (${config.nodeEnv})`);
+});
+
+//
+// ✅ 2. GRACEFUL SHUTDOWN (FIXED)
+//
 const shutdown = async (signal) => {
-  logger.info(`${signal} received. Shutting down...`);
+  logger.info(`⚠️ ${signal} received. Closing server...`);
+
   try {
-    await pool.end();
-    logger.info('✅ Database pool closed.');
-    process.exit(0);
+    // Stop accepting new requests
+    server.close(async () => {
+      logger.info('🛑 HTTP server closed.');
+
+      try {
+        // Close DB pool
+        await pool.end();
+        logger.info('✅ Database pool closed.');
+
+        process.exit(0);
+      } catch (dbError) {
+        logger.error('❌ Error closing DB pool:', dbError);
+        process.exit(1);
+      }
+    });
+
   } catch (error) {
-    logger.error('❌ Error during shutdown:', error);
+    logger.error('❌ Shutdown error:', error);
     process.exit(1);
   }
 };
 
-// ✅ Handle signals
+//
+// ✅ 3. HANDLE SIGNALS
+//
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
+//
+// ✅ 4. HANDLE ERRORS (IMPORTANT)
+//
 process.on('unhandledRejection', (reason) => {
-  logger.error('Unhandled Rejection:', reason);
-  shutdown('unhandledRejection');
+  logger.error('❌ Unhandled Rejection:', reason);
 });
 
 process.on('uncaughtException', (error) => {
-  logger.error('Uncaught Exception:', error);
-  shutdown('uncaughtException');
+  logger.error('❌ Uncaught Exception:', error);
 });
 
-// ✅ IMPORTANT: Use Render PORT
-const PORT = process.env.PORT || config.port || 4000;
-
-// ✅ Start server
-app.listen(PORT, () => {
-  logger.info(`🚖 Taxi API running on port ${PORT} (${config.nodeEnv})`);
-});
+//
+// ✅ 5. KEEP RENDER ALIVE (OPTIONAL BUT USEFUL)
+//
+setInterval(() => {
+  logger.info('🔄 Server heartbeat alive');
+}, 1000 * 60 * 10); // every 10 mins
