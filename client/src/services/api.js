@@ -1,5 +1,7 @@
+// ✅ FIXED BASE URL (VERY IMPORTANT)
 const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'https://taxi-booking-ilns.onrender.com/'
+  (import.meta.env.VITE_API_BASE_URL ||
+    'https://taxi-booking-ilns.onrender.com/api').replace(/\/$/, '')
 
 /**
  * Core API request helper
@@ -11,40 +13,52 @@ async function apiRequest(endpoint, options = {}) {
   if (session) {
     try {
       const parsed = JSON.parse(session)
-      token = parsed?.token || parsed?.data?.token || null
-      if (!token && parsed?.admin && parsed?.token) token = parsed.token
-      if (!token && parsed?.data?.admin && parsed?.data?.token) token = parsed.data.token
+      token =
+        parsed?.token ||
+        parsed?.data?.token ||
+        null
+
+      if (!token && parsed?.admin && parsed?.token) {
+        token = parsed.token
+      }
+
+      if (!token && parsed?.data?.admin && parsed?.data?.token) {
+        token = parsed.data.token
+      }
     } catch (err) {
       token = null
     }
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    method: options.method || 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-    body: options.body ? options.body : undefined,
-  })
+  try {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      method: options.method || 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+      body: options.body ? options.body : undefined,
+    })
 
-  const data = await response.json().catch(() => ({}))
+    const data = await response.json().catch(() => ({}))
 
-  if (!response.ok) {
-    console.error('API ERROR:', data)
+    if (!response.ok) {
+      console.error('API ERROR:', data)
 
-    if (response.status === 401) {
-      localStorage.removeItem('admin_session')
-      // optional: page reload to force login
-      // window.location.href = '/admin/login'
-      throw new Error(data?.error || 'Unauthorized')
+      if (response.status === 401) {
+        localStorage.removeItem('admin_session')
+        throw new Error(data?.error || 'Unauthorized')
+      }
+
+      throw new Error(data?.message || `API Error: ${response.status}`)
     }
 
-    throw new Error(data?.message || `API Error: ${response.status}`)
+    return data
+  } catch (error) {
+    console.error('NETWORK ERROR:', error.message)
+    throw new Error('Server not reachable. Please try again.')
   }
-
-  return data
 }
 
 //
@@ -72,9 +86,7 @@ export async function adminLogin(credentials) {
 //
 export async function getBookings() {
   const res = await apiRequest('/bookings')
-  // Handle paginated response { success, data: [...], pagination: {...} }
-  const bookings = res?.data || []
-  return Array.isArray(bookings) ? bookings : []
+  return Array.isArray(res?.data) ? res.data : []
 }
 
 export async function createBooking(bookingData) {
@@ -89,8 +101,7 @@ export async function createBooking(bookingData) {
 //
 export async function getVehicles() {
   const res = await apiRequest('/vehicles')
-  const vehicles = res?.data || res || []
-  return Array.isArray(vehicles) ? vehicles : []
+  return Array.isArray(res?.data) ? res.data : []
 }
 
 export async function addVehicle(vehicleData) {
@@ -131,15 +142,8 @@ export async function getFareEstimate({ pickup, drop }) {
     response?.data?.estimates || response?.estimates || {}
 
   const vehicleOptions = vehicles.map((v) => {
-    const baseFare =
-      typeof v.base_fare === 'string'
-        ? parseFloat(v.base_fare)
-        : v.base_fare
-
-    const perKmRate =
-      typeof v.per_km_rate === 'string'
-        ? parseFloat(v.per_km_rate)
-        : v.per_km_rate
+    const baseFare = Number(v.base_fare)
+    const perKmRate = Number(v.per_km_rate)
 
     const fareEstimate = estimates?.[v.type] || baseFare
     const fare = Math.round(fareEstimate + distance_km * perKmRate)
