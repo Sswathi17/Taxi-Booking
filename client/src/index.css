@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* ✅ Define your custom theme (Tailwind v4 way) */
+@theme {
+  --color-surface-0: #0f172a;
+  --color-surface-1: #111827;
+  --color-surface-2: #1f2937;
+  --color-surface-3: #374151;
+  --color-surface-4: #4b5563;
+
+  --color-brand-500: #f59e0b;
+
+  --font-body: "Inter", sans-serif;
+  --font-display: "Poppins", sans-serif;
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-surface-0 text-white font-body antialiased;
+    background-image: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(245,158,11,0.08) 0%,
+      transparent 60%
+    );
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-4 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-500;
+  }
+
+  ::selection {
+    @apply bg-brand-500/30 text-white;
+  }
+}
+
+@layer components {
+  .input-base {
+    @apply w-full bg-surface-2 border border-white/10 rounded-xl px-4 py-3 text-white
+           font-body text-sm transition-all duration-200;
+  }
+
+  .input-base:focus {
+    @apply outline-none border-brand-500/60 bg-surface-3 ring-2 ring-brand-500/10;
+  }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+}
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }

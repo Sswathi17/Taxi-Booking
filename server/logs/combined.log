@@ -1,0 +1,115 @@
+2026-03-29 14:47:29 [info]: 🚕 Taxi API running on port 5000 [development]
+2026-03-29 14:47:29 [info]: 📡 Health: http://localhost:5000/api/health
+2026-03-29 14:54:03 [info]: 🚕 Taxi API running on port 5000 [development]
+2026-03-29 14:54:04 [info]: 📡 Health: http://localhost:5000/api/health
+2026-03-29 14:58:20 [info]: 🚕 Taxi API running on port 5000 [development]
+2026-03-29 14:58:44 [info]: 🚕 Taxi API running on port 5000 [development]
+2026-03-29 15:02:40 [info]: 🚕 Taxi API running on port 5000 [development]
+2026-03-29 15:03:16 [info]: 🚖 Taxi API running on port 5000 (development)
+2026-03-29 15:03:52 [info]: 🚖 Taxi API running on port 5000 (development)
+2026-03-29 15:06:50 [info]: 🚖 Taxi API running on port 5000 (development)
+2026-03-29 15:07:32 [info]: 🚖 Taxi API running on port 5000 (development)
+2026-03-29 15:10:13 [info]: 🚖 Taxi API running on port 5000 (development)
+2026-03-29 15:11:42 [info]: 🚖 Taxi API running on port 5000 (development)
+2026-03-29 15:12:22 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 15:15:36 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 15:19:28 [info]: SIGINT received. Shutting down...
+2026-03-29 15:19:58 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 15:26:35 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 15:34:49 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 16:30:08 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 16:36:30 [info]: Booking created: TXI-20260329-K2N1 | Fare: ₹177
+2026-03-29 16:39:09 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:53:18 [error]: Error: Connection terminated due to connection timeout
+    at C:\Users\swathi\OneDrive\Desktop\Taxi app\server\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async query (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\db\pool.js:24:18)
+    at async Object.findByEmail (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\models\admin.model.js:4:18)
+    at async login (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\controllers\admin.controller.js:9:19)
+2026-03-29 16:53:28 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:53:35 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:53:38 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:53:41 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:53:46 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:53:51 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:54:00 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:54:14 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:54:19 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:54:36 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:55:56 [error]: Error: Connection terminated due to connection timeout
+    at C:\Users\swathi\OneDrive\Desktop\Taxi app\server\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async query (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\db\pool.js:24:18)
+    at async Object.findByEmail (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\models\admin.model.js:4:18)
+    at async login (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\controllers\admin.controller.js:9:19)
+2026-03-29 16:57:02 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:57:22 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 16:57:54 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:59:23 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:59:31 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:59:33 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:59:35 [info]: Admin logged in: admin@taxi.com
+2026-03-29 16:59:39 [info]: Admin logged in: admin@taxi.com
+2026-03-29 17:01:14 [info]: Admin logged in: admin@taxi.com
+2026-03-29 17:01:24 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:25 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:25 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:25 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:45 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:46 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:51 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:01:54 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:03:15 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 17:03:50 [info]: Booking created: TXI-20260329-2B22 | Fare: ₹113
+2026-03-29 17:04:01 [info]: Admin logged in: admin@taxi.com
+2026-03-29 17:04:05 [info]: Admin logged in: admin@taxi.com
+2026-03-29 17:04:15 [info]: Admin logged in: admin@taxi.com
+2026-03-29 17:32:23 [info]: Admin logged in: admin@taxi.com
+2026-03-29 17:33:54 [info]: Booking created: TXI-20260329-5UWK | Fare: ₹225
+2026-03-29 20:35:51 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 20:36:38 [info]: Booking created: TXI-20260329-LJAK | Fare: ₹113
+2026-03-29 20:39:10 [info]: Booking created: TXI-20260329-0NKR | Fare: ₹201
+2026-03-29 20:49:20 [info]: Booking created: TXI-20260329-MOT9 | Fare: ₹795
+2026-03-29 20:52:32 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-29 20:53:41 [info]: Booking created: TXI-20260329-T08D | Fare: ₹217
+2026-03-29 20:58:18 [info]: Booking created: TXI-20260329-H0A3 | Fare: ₹233
+2026-03-29 21:00:58 [info]: Admin logged in: admin@taxi.com
+2026-03-29 21:01:34 [info]: Admin logged in: admin@taxi.com
+2026-03-30 12:02:53 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:03:39 [info]: Booking created: TXI-20260330-41FW | Fare: ₹73
+2026-03-30 12:12:29 [info]: Booking created: TXI-20260330-5POQ | Fare: ₹655
+2026-03-30 12:16:52 [info]: Booking created: TXI-20260330-T33P | Fare: ₹150
+2026-03-30 12:22:33 [info]: Booking created: TXI-20260330-XOP9 | Fare: ₹1075
+2026-03-30 12:25:02 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:25:15 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:25:28 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:25:31 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:28:17 [info]: Booking created: TXI-20260330-2ID1 | Fare: ₹458
+2026-03-30 12:29:24 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:30:07 [info]: Admin logged in: admin@taxi.com
+2026-03-30 12:35:38 [info]: Booking created: TXI-20260330-UE9G | Fare: ₹655
+2026-03-30 12:38:30 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:39:20 [info]: Booking created: TXI-20260330-O2VP | Fare: ₹585
+2026-03-30 12:45:36 [info]: Booking created: TXI-20260330-QTSN | Fare: ₹515
+2026-03-30 12:54:12 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 12:54:39 [info]: Booking created: TXI-20260330-3WCB | Fare: ₹121
+2026-03-30 13:01:24 [info]: Booking created: TXI-20260330-POG9 | Fare: ₹1110
+2026-03-30 13:03:04 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:03:04 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:03:07 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:03:07 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:03:21 [info]: Booking created: TXI-20260330-HE2L | Fare: ₹220
+2026-03-30 13:07:08 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:07:08 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:07:32 [info]: Booking created: TXI-20260330-BFJ1 | Fare: ₹153
+2026-03-30 13:12:58 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:12:59 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:13:02 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:13:02 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:13:49 [info]: Booking created: TXI-20260330-VANA | Fare: ₹130
+2026-03-30 13:15:16 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 13:16:36 [info]: Booking created: TXI-20260330-YUC7 | Fare: ₹410
+2026-03-30 13:51:22 [info]: Admin logged in: admin@taxi.com
+2026-03-30 13:52:38 [info]: Admin logged in: admin@taxi.com
+2026-03-30 13:53:39 [info]: 🚖 Taxi API running on port 4000 (development)
+2026-03-30 15:01:58 [info]: 🚖 Taxi API running on port 4000 (development)

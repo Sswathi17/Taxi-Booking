@@ -1,0 +1,12 @@
+2026-03-29 16:53:18 [error]: Error: Connection terminated due to connection timeout
+    at C:\Users\swathi\OneDrive\Desktop\Taxi app\server\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async query (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\db\pool.js:24:18)
+    at async Object.findByEmail (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\models\admin.model.js:4:18)
+    at async login (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\controllers\admin.controller.js:9:19)
+2026-03-29 16:55:56 [error]: Error: Connection terminated due to connection timeout
+    at C:\Users\swathi\OneDrive\Desktop\Taxi app\server\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async query (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\db\pool.js:24:18)
+    at async Object.findByEmail (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\models\admin.model.js:4:18)
+    at async login (C:\Users\swathi\OneDrive\Desktop\Taxi app\server\src\controllers\admin.controller.js:9:19)
