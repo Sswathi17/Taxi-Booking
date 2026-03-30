@@ -19,17 +19,35 @@ app.get('/', (req, res) => {
 });
 
 //
-// ✅ 2. SECURITY
+// ✅ 2. CORS — MUST BE BEFORE HELMET AND ROUTES
 //
-app.use(helmet());
+const allowedOrigins = [
+  'https://taxi-booking-gilt.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (Postman, mobile apps, curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS: Origin '${origin}' not allowed`));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+// Handle preflight requests for all routes
+app.options('*', cors());
 
 //
-// ✅ 3. ✅ CORS (FIXED — WORKING VERSION)
+// ✅ 3. SECURITY
 //
-app.use(cors({
-  origin: "*", // 🔥 allow all origins (fixes Failed to fetch)
-  credentials: true,
-}));
+app.use(helmet());
 
 //
 // ✅ 4. BODY PARSER
