@@ -12,7 +12,7 @@ const logger = require('./utils/logger');
 const app = express();
 
 //
-// ✅ 1. ROOT ROUTE (Health Check)
+// ✅ 1. ROOT ROUTE
 //
 app.get('/', (req, res) => {
   res.status(200).send('🚖 Taxi API is running');
@@ -24,25 +24,10 @@ app.get('/', (req, res) => {
 app.use(helmet());
 
 //
-// ✅ 3. ✅ FIXED CORS (SAFE + FLEXIBLE)
+// ✅ 3. ✅ CORS (FIXED — WORKING VERSION)
 //
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://your-frontend.vercel.app', // 🔁 replace this
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin (Postman, mobile apps)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
-      return callback(null, true);
-    }
-
-    return callback(new Error(`CORS blocked: ${origin}`));
-  },
+  origin: "*", // 🔥 allow all origins (fixes Failed to fetch)
   credentials: true,
 }));
 
