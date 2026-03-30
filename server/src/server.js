@@ -5,7 +5,7 @@ const config = require('./config/config');
 const { pool } = require('./db/pool');
 const logger = require('./utils/logger');
 
-// ✅ Graceful shutdown function
+// ✅ Graceful shutdown
 const shutdown = async (signal) => {
   logger.info(`${signal} received. Shutting down...`);
   try {
@@ -18,11 +18,10 @@ const shutdown = async (signal) => {
   }
 };
 
-// ✅ Handle system signals
+// ✅ Handle signals
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-// ✅ Handle unexpected errors
 process.on('unhandledRejection', (reason) => {
   logger.error('Unhandled Rejection:', reason);
   shutdown('unhandledRejection');
@@ -33,7 +32,10 @@ process.on('uncaughtException', (error) => {
   shutdown('uncaughtException');
 });
 
+// ✅ IMPORTANT: Use Render PORT
+const PORT = process.env.PORT || config.port || 4000;
+
 // ✅ Start server
-app.listen(config.port, () => {
-  logger.info(`🚖 Taxi API running on port ${config.port} (${config.nodeEnv})`);
+app.listen(PORT, () => {
+  logger.info(`🚖 Taxi API running on port ${PORT} (${config.nodeEnv})`);
 });

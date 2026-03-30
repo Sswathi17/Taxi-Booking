@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+
 const config = require('./config/config');
 const routes = require('./routes/index');
 const { errorHandler, notFound } = require('./middlewares/error.middleware');
@@ -10,44 +11,49 @@ const logger = require('./utils/logger');
 
 const app = express();
 
-// ✅ 1. ROOT ROUTE FIRST (NO LIMITER)
+// ✅ 1. ROOT ROUTE (for Render health check)
 app.get('/', (req, res) => {
-  res.send('🚖 Taxi API is running');
+  res.status(200).send('🚖 Taxi API is running');
 });
 
 // ✅ 2. SECURITY
 app.use(helmet());
 
+// ✅ 3. CORS (IMPORTANT FIX)
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['*'];
+
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',')
-    : '*',
+  origin: allowedOrigins,
   credentials: true,
 }));
 
-// ✅ 3. BODY PARSER
+// ✅ 4. BODY PARSER
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ 4. LOGGER
+// ✅ 5. LOGGER
 app.use(
-  config.isDev
+  config.nodeEnv === 'development'
     ? morgan('dev')
     : morgan('combined', {
         stream: { write: (msg) => logger.info(msg.trim()) },
       })
 );
 
-// ✅ 5. APPLY RATE LIMIT ONLY TO /api (NOT ROOT)
+// ✅ 6. RATE LIMIT (only for API)
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
   message: { success: false, error: 'Too many requests' },
 });
 
 app.use('/api', apiLimiter);
 
-// ✅ 6. LOGIN LIMITER ONLY
+// ✅ 7. LOGIN LIMITER
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
@@ -56,10 +62,15 @@ const loginLimiter = rateLimit({
 
 app.use('/api/auth/login', loginLimiter);
 
-// ✅ 7. ROUTES
+// ✅ 8. ROUTES
 app.use('/api', routes);
 
-// ✅ 8. ERROR HANDLING
+// ✅ 9. TEST ROUTE (VERY IMPORTANT for debugging)
+app.get('/api/test', (req, res) => {
+  res.json({ success: true, message: 'API working 🚀' });
+});
+
+// ✅ 10. ERROR HANDLING (must be last)
 app.use(notFound);
 app.use(errorHandler);
 
