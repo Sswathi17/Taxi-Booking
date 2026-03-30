@@ -1,7 +1,7 @@
 // ✅ FIXED BASE URL (VERY IMPORTANT)
 const BASE_URL =
   (import.meta.env.VITE_API_BASE_URL ||
-    'https://taxi-booking-ilns.onrender.com/api').replace(/\/$/, '')
+    'https://taxi-booking-ilns.onrender.com'
 
 /**
  * Core API request helper
