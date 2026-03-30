@@ -11,7 +11,7 @@ const logger = require('./utils/logger');
 
 const app = express();
 
-// ✅ 1. ROOT ROUTE (for Render health check)
+// ✅ 1. ROOT ROUTE
 app.get('/', (req, res) => {
   res.status(200).send('🚖 Taxi API is running');
 });
@@ -19,13 +19,22 @@ app.get('/', (req, res) => {
 // ✅ 2. SECURITY
 app.use(helmet());
 
-// ✅ 3. CORS (IMPORTANT FIX)
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(',')
-  : ['*'];
-
+// ✅ 3. ✅ FIXED CORS (IMPORTANT)
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+
+    const allowed = [
+      "https://taxi-booking-gilt.vercel.app/" // your frontend URL
+    ];
+
+    if (allowed.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 
@@ -42,12 +51,10 @@ app.use(
       })
 );
 
-// ✅ 6. RATE LIMIT (only for API)
+// ✅ 6. RATE LIMIT
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
-  standardHeaders: true,
-  legacyHeaders: false,
   message: { success: false, error: 'Too many requests' },
 });
 
@@ -65,12 +72,12 @@ app.use('/api/auth/login', loginLimiter);
 // ✅ 8. ROUTES
 app.use('/api', routes);
 
-// ✅ 9. TEST ROUTE (VERY IMPORTANT for debugging)
+// ✅ 9. TEST ROUTE
 app.get('/api/test', (req, res) => {
   res.json({ success: true, message: 'API working 🚀' });
 });
 
-// ✅ 10. ERROR HANDLING (must be last)
+// ✅ 10. ERROR HANDLING
 app.use(notFound);
 app.use(errorHandler);
 
