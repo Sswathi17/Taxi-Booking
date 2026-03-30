@@ -11,38 +11,48 @@ const logger = require('./utils/logger');
 
 const app = express();
 
+//
 // ✅ 1. ROOT ROUTE
+//
 app.get('/', (req, res) => {
   res.status(200).send('🚖 Taxi API is running');
 });
 
+//
 // ✅ 2. SECURITY
+//
 app.use(helmet());
 
-// ✅ 3. ✅ FIXED CORS (IMPORTANT)
+//
+// ✅ 3. 🔥 FIXED CORS (IMPORTANT)
+//
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like Postman)
+    // allow Postman / mobile / curl
     if (!origin) return callback(null, true);
 
-    const allowed = [
-      "https://taxi-booking-gilt.vercel.app/" // your frontend URL
-    ];
-
-    if (allowed.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    // ✅ allow localhost + ALL vercel deployments
+    if (
+      origin.includes('localhost') ||
+      origin.includes('vercel.app')
+    ) {
+      return callback(null, true);
     }
+
+    return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
 }));
 
+//
 // ✅ 4. BODY PARSER
+//
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//
 // ✅ 5. LOGGER
+//
 app.use(
   config.nodeEnv === 'development'
     ? morgan('dev')
@@ -51,7 +61,9 @@ app.use(
       })
 );
 
-// ✅ 6. RATE LIMIT
+//
+// ✅ 6. RATE LIMIT (GENERAL)
+//
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -60,7 +72,9 @@ const apiLimiter = rateLimit({
 
 app.use('/api', apiLimiter);
 
+//
 // ✅ 7. LOGIN LIMITER
+//
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
@@ -69,15 +83,21 @@ const loginLimiter = rateLimit({
 
 app.use('/api/auth/login', loginLimiter);
 
+//
 // ✅ 8. ROUTES
+//
 app.use('/api', routes);
 
+//
 // ✅ 9. TEST ROUTE
+//
 app.get('/api/test', (req, res) => {
   res.json({ success: true, message: 'API working 🚀' });
 });
 
+//
 // ✅ 10. ERROR HANDLING
+//
 app.use(notFound);
 app.use(errorHandler);
 
